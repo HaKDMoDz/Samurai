@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Samurai.Graphics
 {
-	public abstract class Texture : GraphicsObject
+	public sealed class Texture : GraphicsObject
 	{
 		internal uint Index
 		{
@@ -46,18 +42,56 @@ namespace Samurai.Graphics
 			get;
 			private set;
 		}
-
-		protected abstract int PixelCount
+				
+		public int Width
 		{
 			get;
+			private set;
 		}
 
-		internal Texture(GraphicsContext graphics)
+		public int Height
+		{
+			get;
+			private set;
+		}
+
+		private int PixelCount
+		{
+			get { return this.Width * this.Height; }
+		}
+
+		private Texture(GraphicsContext graphics)
 			: base(graphics)
 		{
 			this.Index = this.Graphics.AllocateTextureIndex();
-
 			this.Handle = this.Graphics.GL.GenTexture();
+		}
+
+		public Texture(
+			GraphicsContext graphics,
+			int width,
+			int height)
+			: base(graphics)
+		{
+			this.Index = this.Graphics.AllocateTextureIndex();
+			this.Handle = this.Graphics.GL.GenTexture();
+
+			graphics.GL.ActiveTexture(GLContext.Texture0 + this.Index);
+			graphics.GL.BindTexture(GLContext.Texture2D, this.Handle);
+
+			graphics.GL.TexImage2D(
+				GLContext.Texture2D,
+				0,
+				(int)GLContext.Rgba8,
+				width,
+				height,
+				0,
+				GLContext.Rgba,
+				(int)GLContext.UnsignedByte,
+				null);
+
+			this.Width = width;
+			this.Height = height;
 		}
 
 		protected override void DisposeManagedResources()
@@ -97,12 +131,46 @@ namespace Samurai.Graphics
 			return pixels;
 		}
 
-		internal static void Initialize<T>(T texture, GraphicsContext graphics, uint target, byte[] bytes, TextureParams parameters)
-			where T : Texture
+		public static Texture LoadFromFile(GraphicsContext graphics, string fileName, TextureParams parameters)
 		{
+			if (graphics == null)
+				throw new ArgumentNullException("graphics");
+
+			if (fileName == null)
+				throw new ArgumentNullException("fileName");
+
+			using (FileStream file = new FileStream(fileName, FileMode.Open, FileAccess.Read))
+				return LoadFromStream(graphics, file, parameters);
+		}
+
+		public static Texture LoadFromStream(GraphicsContext graphics, Stream stream, TextureParams parameters)
+		{
+			if (graphics == null)
+				throw new ArgumentNullException("graphics");
+
+			if (stream == null)
+				throw new ArgumentNullException("stream");
+
+			using (Bitmap bitmap = (Bitmap)Bitmap.FromStream(stream))
+			{
+				byte[] bytes = BitmapHelper.GetBytes(bitmap);
+				return LoadFromBytes(graphics, bytes, bitmap.Width, bitmap.Height, parameters);
+			}
+		}
+
+		public static Texture LoadFromBytes(GraphicsContext graphics, byte[] bytes, int width, int height, TextureParams parameters)
+		{
+			if (graphics == null)
+				throw new ArgumentNullException("graphics");
+
+			if (bytes == null)
+				throw new ArgumentNullException("bytes");
+
+			Texture texture = new Texture(graphics);
+
 			graphics.GL.ActiveTexture(GLContext.Texture0 + texture.Index);
-			graphics.GL.BindTexture(target, texture.Handle);
-			
+			graphics.GL.BindTexture(GLContext.Texture2D, texture.Handle);
+
 			if (parameters.ColorKey != null)
 			{
 				for (int i = 0; i < bytes.Length; i += 4)
@@ -114,10 +182,26 @@ namespace Samurai.Graphics
 				}
 			}
 
-			graphics.GL.TexParameteri(target, GLContext.TextureMagFilter, (int)parameters.MagFilter);
-			graphics.GL.TexParameteri(target, GLContext.TextureMinFilter, (int)parameters.MinFilter);
-			graphics.GL.TexParameteri(target, GLContext.TextureWrapS, (int)parameters.WrapS);
-			graphics.GL.TexParameteri(target, GLContext.TextureWrapT, (int)parameters.WrapT);
+			graphics.GL.TexParameteri(GLContext.Texture2D, GLContext.TextureMagFilter, (int)parameters.MagFilter);
+			graphics.GL.TexParameteri(GLContext.Texture2D, GLContext.TextureMinFilter, (int)parameters.MinFilter);
+			graphics.GL.TexParameteri(GLContext.Texture2D, GLContext.TextureWrapS, (int)parameters.WrapS);
+			graphics.GL.TexParameteri(GLContext.Texture2D, GLContext.TextureWrapT, (int)parameters.WrapT);
+
+			graphics.GL.TexImage2D(
+				GLContext.Texture2D,
+				0,
+				(int)GLContext.Rgba8,
+				width,
+				height,
+				0,
+				GLContext.Rgba,
+				(int)GLContext.UnsignedByte,
+				bytes);
+
+			texture.Width = width;
+			texture.Height = height;
+
+			return texture;
 		}
 	}
 }

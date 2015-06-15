@@ -11,7 +11,7 @@ namespace Samurai.Graphics.Canvas2D
         ShaderProgram shader;
         Color4 tint;
 
-        public Texture2D Texture
+        public Texture Texture
         {
             get;
             set;

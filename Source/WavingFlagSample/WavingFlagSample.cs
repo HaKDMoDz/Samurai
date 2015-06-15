@@ -22,7 +22,7 @@ namespace WavingFlagSample
 		}
 
 		ShaderProgram shader;
-		Texture2D texture;
+		Texture texture;
 		StaticVertexBuffer<Vertex> vertexBuffer;
 		StaticIndexBuffer<ushort> indexBuffer;
 
@@ -40,7 +40,7 @@ namespace WavingFlagSample
 
 			this.Graphics.ShaderProgram = this.shader;
 			
-			this.texture = Texture2D.LoadFromFile(this.Graphics, "Flag.png", TextureParams.Default);
+			this.texture = Texture.LoadFromFile(this.Graphics, "Flag.png", TextureParams.Default);
 
 			int totalChunks = 100;
 			int chunkSize = this.texture.Width / totalChunks;

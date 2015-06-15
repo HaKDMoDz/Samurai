@@ -5,7 +5,7 @@ namespace Samurai.Graphics.Sprites
 {
 	public sealed partial class SpriteSheet
 	{
-		public static SpriteSheet Build(Texture2D texture, int frameWidth, int frameHeight)
+		public static SpriteSheet Build(Texture texture, int frameWidth, int frameHeight)
 		{
 			List<Rectangle> frames = new List<Rectangle>();
 

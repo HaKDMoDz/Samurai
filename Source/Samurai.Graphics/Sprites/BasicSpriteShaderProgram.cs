@@ -51,7 +51,7 @@ namespace Samurai.Graphics.Sprites
 		/// Sets the sampler texture to be used.
 		/// </summary>
 		/// <param name="texture"></param>
-		public void SetSampler(Texture2D texture)
+		public void SetSampler(Texture texture)
 		{
 			this.ShaderProgram.SetValue("fragSampler", texture);
 		}

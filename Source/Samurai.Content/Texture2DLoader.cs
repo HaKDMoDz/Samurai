@@ -9,7 +9,7 @@ using Samurai.Graphics;
 
 namespace Samurai.Content
 {
-	public class Texture2DLoader : ContentLoader<Texture2D>
+	public class Texture2DLoader : ContentLoader<Texture>
 	{
 		GraphicsContext graphics;
 
@@ -21,7 +21,7 @@ namespace Samurai.Content
 			this.graphics = graphics;
 		}
 				
-		public override Texture2D Load(Stream stream)
+		public override Texture Load(Stream stream)
 		{
 			using (BinaryReader br = new BinaryReader(stream))
 			{
@@ -51,7 +51,7 @@ namespace Samurai.Content
 					}
 				}
 
-				return Texture2D.LoadFromBytes(this.graphics, bytes, width, height, new TextureParams());
+				return Texture.LoadFromBytes(this.graphics, bytes, width, height, new TextureParams());
 			}
 		}
 	}

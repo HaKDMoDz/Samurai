@@ -21,7 +21,7 @@ namespace Samurai.Graphics.Sprites
 
 		Vertex[] vertices;
 		int vertexCount;
-		Texture2D texture;
+		Texture texture;
 
 		DynamicVertexBuffer<Vertex> vertexBuffer;
 		StaticIndexBuffer<ushort> indexBuffer;
@@ -165,7 +165,7 @@ namespace Samurai.Graphics.Sprites
 		}
 
 		public void Draw(
-			Texture2D texture,
+			Texture texture,
 			Vector2 destination,
 			Rectangle? source = null,
 			Color4? tint = null,
@@ -191,7 +191,7 @@ namespace Samurai.Graphics.Sprites
 		}
 			
 		public void Draw(
-			Texture2D texture,
+			Texture texture,
 			Rectangle destination,
 			Rectangle? source = null,
 			Color4? tint = null,
@@ -242,7 +242,7 @@ namespace Samurai.Graphics.Sprites
 		}
 
 		private void DrawInternal(
-			Texture2D texture,
+			Texture texture,
 			Vector2 destination,
 			int width,
 			int height,

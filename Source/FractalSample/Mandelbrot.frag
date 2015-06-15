@@ -3,7 +3,7 @@
 in vec2 fragPosition;
 in vec2 fragUV;
 
-uniform sampler1D palette;
+uniform sampler2D palette;
 uniform float centerX;
 uniform float centerY;
 uniform float scale;
@@ -31,5 +31,6 @@ void main() {
         z.y = y;
     }
 
-    outColor = texture(palette, (i == int(iterations) ? 0.0 : float(i)) / 100.0f);
+	float x = (i == int(iterations) ? 0.0 : float(i)) / 100.0f;
+    outColor = texture(palette, vec2(x, 0));
 }

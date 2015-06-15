@@ -116,8 +116,6 @@
     <Compile Include="StencilFunction.cs" />
     <Compile Include="StencilOperation.cs" />
     <Compile Include="Texture.cs" />
-    <Compile Include="Texture1D.cs" />
-    <Compile Include="Texture2D.cs" />
     <Compile Include="TextureFilter.cs" />
     <Compile Include="Sprites\TextureFont.cs" />
     <Compile Include="Sprites\TextureFont.Build.cs" />

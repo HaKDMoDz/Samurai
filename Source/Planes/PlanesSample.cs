@@ -11,7 +11,7 @@ namespace Planes
 	{
 		SpriteRenderer spriteRenderer;
 		BasicSpriteShaderProgram shaderProgram;
-		Texture2D planesTexture;
+		Texture planesTexture;
 		SpriteSheet planeSpriteSheet;
 		TextureFont font;
 				
@@ -31,7 +31,7 @@ namespace Planes
 			this.spriteRenderer = new SpriteRenderer(this.Graphics);
 			this.shaderProgram = new BasicSpriteShaderProgram(this.Graphics);
 						
-			this.planesTexture = Texture2D.LoadFromFile(this.Graphics, "Planes.png", new TextureParams()
+			this.planesTexture = Texture.LoadFromFile(this.Graphics, "Planes.png", new TextureParams()
 				{
 				});
 

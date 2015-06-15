@@ -18,7 +18,7 @@ namespace Samurai.Graphics.Sprites
 
 		IDictionary<char, Rectangle> rectangles;
 
-		public Texture2D Texture
+		public Texture Texture
 		{
 			get;
 			private set;
@@ -70,7 +70,7 @@ namespace Samurai.Graphics.Sprites
 		/// </summary>
 		/// <param name="texture">The texture used by the font.</param>
 		/// <param name="rectangles">Dictionary of characters to rectangles.</param>
-		public TextureFont(Texture2D texture, IDictionary<char, Rectangle> rectangles)
+		public TextureFont(Texture texture, IDictionary<char, Rectangle> rectangles)
 		{
 			if (texture == null)
 				throw new ArgumentNullException("texture");

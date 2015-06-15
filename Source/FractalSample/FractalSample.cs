@@ -33,7 +33,7 @@ namespace FractalSample
 				
 		ShaderProgram shaderProgram;
 		StaticVertexBuffer<Vertex> vertexBuffer;
-		Texture1D palette;
+		Texture palette;
 		Keyboard keyboard;
 
 		float centerX = 0;
@@ -54,7 +54,7 @@ namespace FractalSample
 
 			this.vertexBuffer = new StaticVertexBuffer<Vertex>(this.Graphics, this.vertexData);
 
-			this.palette = Texture1D.LoadFromFile(this.Graphics, "Palette.png", new TextureParams()
+			this.palette = Texture.LoadFromFile(this.Graphics, "Palette.png", new TextureParams()
 				{
 					WrapS = TextureWrap.Repeat,
 					WrapT = TextureWrap.Repeat

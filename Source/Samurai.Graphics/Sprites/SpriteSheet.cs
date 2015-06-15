@@ -13,7 +13,7 @@ namespace Samurai.Graphics.Sprites
 		/// <summary>
 		/// The texture of the SpriteSheet.
 		/// </summary>
-		public Texture2D Texture
+		public Texture Texture
 		{
 			get;
 			private set;
@@ -42,7 +42,7 @@ namespace Samurai.Graphics.Sprites
 		/// </summary>
 		/// <param name="texture"></param>
 		/// <param name="frames"></param>
-		public SpriteSheet(Texture2D texture, IList<Rectangle> frames)
+		public SpriteSheet(Texture texture, IList<Rectangle> frames)
 		{
 			if (texture == null)
 				throw new ArgumentNullException("texture");

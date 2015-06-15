@@ -8,6 +8,6 @@ namespace Samurai.Graphics.Sprites
 
 		void SetTransform(ref Matrix4 transform);
 
-		void SetSampler(Texture2D texture);
+		void SetSampler(Texture texture);
 	}
 }
